@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheduling - SEVA Health Admin</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: 80px repeat(7, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      background-color: var(--card);
+    }
+    .calendar-header-cell {
+      padding: var(--spacing-3);
+      text-align: center;
+      font-weight: 500;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface);
+    }
+    .time-cell {
+      padding: var(--spacing-2);
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface);
+    }
+    .day-cell {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      position: relative;
+      background-color: var(--card);
+    }
+    .booking-slot {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 4px;
+      bottom: 4px;
+      background-color: var(--primary-light);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--radius-badge);
+      padding: var(--spacing-1) var(--spacing-2);
+      font-size: 0.75rem;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .booking-slot.completed {
+      background-color: #d1fae5;
+      border-left-color: #10b981;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="brand">
+          <div class="brand-icon"><img src="logo.jpg" alt="SEVA Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: inherit; background-color: white;"></div>
+          <span class="brand-text">SEVA Health</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">dashboard</span></div>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="caregivers.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">medical_services</span></div>
+          <span class="nav-text">Caregivers</span>
+        </a>
+        <a href="guardians.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">family_restroom</span></div>
+          <span class="nav-text">Guardians</span>
+        </a>
+        <a href="patients.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">elderly</span></div>
+          <span class="nav-text">Patients</span>
+        </a>
+        <a href="bookings.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">event</span></div>
+          <span class="nav-text">Bookings</span>
+        </a>
+        <a href="scheduling.html" class="nav-item active">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">calendar_month</span></div>
+          <span class="nav-text">Scheduling</span>
+        </a>
+        <a href="attendance.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">schedule</span></div>
+          <span class="nav-text">Attendance</span>
+        </a>
+        <a href="payroll.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">payments</span></div>
+          <span class="nav-text">Payroll</span>
+        </a>
+        <a href="payments.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">credit_card</span></div>
+          <span class="nav-text">Payments</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">bar_chart</span></div>
+          <span class="nav-text">Reports</span>
+        </a>
+        <a href="support.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">headset_mic</span></div>
+          <span class="nav-text">Support</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+          <div class="nav-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">settings</span></div>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html" class="btn btn-outline w-full text-center">Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebar-toggle" class="icon-btn"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">menu</span></button>
+          <div class="search-bar">
+            <span class="search-icon"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">search</span></span>
+            <input type="text" placeholder="Search across SEVA...">
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn"><span class="material-icons" style="font-size: 1.2rem; transform: translateY(4px);">notifications</span><span class="icon-badge"></span></button>
+          <div class="user-profile">
+            <div class="avatar">A</div>
+            <div class="user-info">
+              <span class="user-name">Admin User</span>
+              <span class="user-role">Super Admin</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">Weekly Scheduling</h1>
+          <div class="flex gap-2">
+            <button class="btn btn-secondary">&lt; Prev Week</button>
+            <span class="btn btn-outline font-semibold">Aug 3 - Aug 9, 2026</span>
+            <button class="btn btn-secondary">Next Week &gt;</button>
+          </div>
+        </div>
+
+        <div class="card p-0 mb-6">
+          <div class="p-4 border-b border flex justify-between items-center" style="border-bottom: 1px solid var(--border);">
+            <div class="flex gap-4 items-center">
+              <label class="text-sm font-medium">Caregiver:</label>
+              <select class="form-control" style="width: 250px;">
+                <option>All Caregivers</option>
+                <option>Sunita Verma</option>
+                <option>Rahul Desai</option>
+                <option>Anjali Patel</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="showNewBookingModal()">Assign Slot</button>
+          </div>
+          
+          <div class="calendar-grid">
+            <!-- Header -->
+            <div class="calendar-header-cell text-muted">Time</div>
+            <div class="calendar-header-cell">Mon (3)</div>
+            <div class="calendar-header-cell">Tue (4)</div>
+            <div class="calendar-header-cell">Wed (5)</div>
+            <div class="calendar-header-cell">Thu (6)</div>
+            <div class="calendar-header-cell">Fri (7)</div>
+            <div class="calendar-header-cell">Sat (8)</div>
+            <div class="calendar-header-cell">Sun (9)</div>
+
+            <!-- 08:00 AM -->
+            <div class="time-cell">08:00 AM</div>
+            <div class="day-cell">
+              <div class="booking-slot completed" onclick="showActivityDetailModal('Booking Details', '08:00 AM', 'Caregiver S. Verma assigned to Patient R. Kumar')">
+                <div class="font-semibold text-primary">S. Verma</div>
+                <div class="text-secondary text-xs">R. Kumar</div>
+              </div>
+            </div>
+            <div class="day-cell"></div>
+            <div class="day-cell">
+              <div class="booking-slot" onclick="showActivityDetailModal('Booking Details', '08:00 AM', 'Caregiver A. Patel assigned to Patient M. Shah')">
+                <div class="font-semibold text-primary">A. Patel</div>
+                <div class="text-secondary text-xs">M. Shah</div>
+              </div>
+            </div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+
+            <!-- 09:00 AM -->
+            <div class="time-cell">09:00 AM</div>
+            <div class="day-cell">
+              <!-- extending -->
+            </div>
+            <div class="day-cell">
+              <div class="booking-slot completed" onclick="showActivityDetailModal('Booking Details', '09:00 AM', 'Caregiver S. Verma assigned to Patient R. Kumar')">
+                <div class="font-semibold text-primary">S. Verma</div>
+                <div class="text-secondary text-xs">R. Kumar</div>
+              </div>
+            </div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+
+            <!-- 10:00 AM -->
+            <div class="time-cell">10:00 AM</div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell">
+              <div class="booking-slot" onclick="showActivityDetailModal('Booking Details', '10:00 AM', 'Caregiver R. Desai assigned to Patient A. Gupta')">
+                <div class="font-semibold text-primary">R. Desai</div>
+                <div class="text-secondary text-xs">A. Gupta</div>
+              </div>
+            </div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+
+            <!-- 11:00 AM -->
+            <div class="time-cell">11:00 AM</div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+            <div class="day-cell"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

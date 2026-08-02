@@ -1,0 +1,116 @@
+{
+  "caregivers": [
+    {
+      "id": "CG-001",
+      "name": "Sunita Verma",
+      "phone": "+91 98765-43210",
+      "email": "sunita.v@email.com",
+      "specialization": "Dementia Care",
+      "rating": 4.8,
+      "experience": "8 years",
+      "status": "Active"
+    },
+    {
+      "id": "CG-002",
+      "name": "Rahul Desai",
+      "phone": "+91 98765-43211",
+      "email": "rahul.d@email.com",
+      "specialization": "Post-Op Recovery",
+      "rating": 4.9,
+      "experience": "5 years",
+      "status": "Active"
+    },
+    {
+      "id": "CG-003",
+      "name": "Anjali Patel",
+      "phone": "+91 98765-43212",
+      "email": "anjali.p@email.com",
+      "specialization": "Mobility Assistance",
+      "rating": 4.7,
+      "experience": "3 years",
+      "status": "Active"
+    },
+    {
+      "id": "CG-004",
+      "name": "Priya Singh",
+      "phone": "+91 98765-43213",
+      "email": "priya.s@email.com",
+      "specialization": "General Care",
+      "rating": 4.6,
+      "experience": "2 years",
+      "status": "Active"
+    },
+    {
+      "id": "CG3115",
+      "name": "malti sharma",
+      "specialization": "Post-Op Recovery",
+      "status": "Active",
+      "experience": "1+ years",
+      "rating": 5
+    }
+  ],
+  "guardians": [
+    {
+      "id": "GD-001",
+      "name": "Sita Kumar",
+      "phone": "+91 91234-56780",
+      "email": "sita.k@email.com"
+    }
+  ],
+  "patients": [
+    {
+      "id": "PT-001",
+      "name": "Ramesh Kumar",
+      "age": 78,
+      "condition": "Alzheimer's",
+      "address": "142, Sea View Apartments, Bandra West, Mumbai 400050",
+      "notes": "Requires help with mobility. Needs medication at 10 AM and 8 PM strictly. Prefers soft diet.",
+      "guardianId": "GD-001",
+      "caregiverId": "CG-001",
+      "status": "Active"
+    },
+    {
+      "id": "PT-002",
+      "name": "Meena Shah",
+      "age": 65,
+      "condition": "Post-Op Recovery",
+      "address": "45, Lotus Colony, Andheri East, Mumbai",
+      "notes": "Recovering from knee surgery. Needs physical therapy assistance.",
+      "guardianId": "GD-001",
+      "caregiverId": "CG-002",
+      "status": "Active"
+    }
+  ],
+  "visits": [
+    {
+      "id": "BK-1001",
+      "date": "2026-08-01",
+      "time": "10:00 AM - 12:00 PM",
+      "patientId": "PT-001",
+      "caregiverId": "CG-001",
+      "type": "Routine",
+      "status": "Confirmed",
+      "notes": "Administer morning medication"
+    },
+    {
+      "id": "BK-1002",
+      "date": "2026-08-02",
+      "time": "02:00 PM - 04:00 PM",
+      "patientId": "PT-002",
+      "caregiverId": "CG-002",
+      "type": "Therapy",
+      "status": "Pending",
+      "notes": "Post-op exercises"
+    }
+  ],
+  "earnings": [
+    {
+      "id": "ERN-001",
+      "caregiverId": "CG-001",
+      "amount": 45000,
+      "date": "2026-08-01",
+      "status": "Paid",
+      "hours": 160
+    }
+  ]
+}

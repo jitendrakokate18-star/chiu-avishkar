@@ -1,0 +1,49 @@
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  background-color: var(--card);
+}
+.calendar-header-cell {
+  padding: var(--spacing-3);
+  text-align: center;
+  font-weight: 500;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+}
+.time-cell {
+  padding: var(--spacing-2);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+}
+.day-cell {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  position: relative;
+  background-color: var(--card);
+}
+.booking-slot {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  background-color: var(--primary-light);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-badge);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: 0.75rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+.booking-slot.completed {
+  background-color: #d1fae5;
+  border-left-color: #10b981;
+}
