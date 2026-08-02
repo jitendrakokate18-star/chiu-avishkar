@@ -12,16 +12,16 @@ export default function Patients() {
 
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const [pRes, cRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_URL}/patients`),
-        fetch(`${import.meta.env.VITE_API_URL}/caregivers`)
-      ]);
-      if (pRes.ok) setPatients(await pRes.json());
-      if (cRes.ok) setCaregivers(await cRes.json());
-    } catch (e) {
-      console.error(e);
-    }
+    setPatients([
+      { "id": "PT-001", "name": "Ramesh Kumar", "age": "78 yrs", "condition": "Alzheimer's", "caregiverId": "CG-001", "guardianId": "GD-001", "status": "Active" },
+      { "id": "PT-002", "name": "Meena Shah", "age": "65 yrs", "condition": "Post-Op Recovery", "caregiverId": "CG-002", "guardianId": "GD-001", "status": "Active" }
+    ]);
+    setCaregivers([
+      { "id": "CG-001", "name": "Sunita Verma" },
+      { "id": "CG-002", "name": "Rahul Desai" },
+      { "id": "CG-003", "name": "Anjali Patel" },
+      { "id": "CG-004", "name": "Priya Singh" }
+    ]);
     setLoading(false);
   };
 
@@ -31,12 +31,7 @@ export default function Patients() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this patient?")) return;
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/patients/${id}`, { method: 'DELETE' });
-      fetchData();
-    } catch (e) {
-      console.error(e);
-    }
+    setPatients(patients.filter(p => p.id !== id));
   };
 
   const handleAddSubmit = async (e) => {
@@ -54,15 +49,8 @@ export default function Patients() {
       guardianId: "GD801", // Default mock
       status: "Active"
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/patients`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setIsAddModalOpen(false);
-      fetchData();
-    } catch (e) { console.error(e); }
+    setPatients([...patients, data]);
+    setIsAddModalOpen(false);
   };
 
   const handleEditSubmit = async (e) => {
@@ -78,15 +66,8 @@ export default function Patients() {
       condition: formData.get('condition'),
       caregiverId: formData.get('caregiver')
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/patients/${editingPatient.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setEditingPatient(null);
-      fetchData();
-    } catch (e) { console.error(e); }
+    setPatients(patients.map(p => p.id === data.id ? data : p));
+    setEditingPatient(null);
   };
 
   return (

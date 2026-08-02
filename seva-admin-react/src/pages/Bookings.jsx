@@ -12,18 +12,18 @@ export default function Bookings() {
 
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const [vRes, pRes, cRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_URL}/visits`),
-        fetch(`${import.meta.env.VITE_API_URL}/patients`),
-        fetch(`${import.meta.env.VITE_API_URL}/caregivers`)
-      ]);
-      if (vRes.ok) setVisits(await vRes.json());
-      if (pRes.ok) setPatients(await pRes.json());
-      if (cRes.ok) setCaregivers(await cRes.json());
-    } catch (e) {
-      console.error(e);
-    }
+    setVisits([
+      { "id": "BK-1001", "date": "2026-08-01", "time": "10:00 AM - 12:00 PM", "patientId": "PT-001", "caregiverId": "CG-001", "type": "Routine", "status": "Confirmed" },
+      { "id": "BK-1002", "date": "2026-08-02", "time": "02:00 PM - 04:00 PM", "patientId": "PT-002", "caregiverId": "CG-002", "type": "Therapy", "status": "Pending" }
+    ]);
+    setPatients([
+      { "id": "PT-001", "name": "Ramesh Kumar" },
+      { "id": "PT-002", "name": "Meena Shah" }
+    ]);
+    setCaregivers([
+      { "id": "CG-001", "name": "Sunita Verma" },
+      { "id": "CG-002", "name": "Rahul Desai" }
+    ]);
     setLoading(false);
   };
 
@@ -33,12 +33,7 @@ export default function Bookings() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/visits/${id}`, { method: 'DELETE' });
-      fetchData();
-    } catch (e) {
-      console.error(e);
-    }
+    setVisits(visits.filter(v => v.id !== id));
   };
 
   const handleAddSubmit = async (e) => {
@@ -56,15 +51,8 @@ export default function Bookings() {
       status: "Confirmed",
       tasks: ["General Checkup"]
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/visits`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setIsAddModalOpen(false);
-      fetchData();
-    } catch (e) { console.error(e); }
+    setVisits([...visits, data]);
+    setIsAddModalOpen(false);
   };
 
   return (

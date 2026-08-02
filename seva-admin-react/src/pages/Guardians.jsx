@@ -10,12 +10,9 @@ export default function Guardians() {
 
   const fetchGuardians = async () => {
     setLoading(true);
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/guardians`);
-      if (res.ok) setGuardians(await res.json());
-    } catch (e) {
-      console.error(e);
-    }
+    setGuardians([
+      { "id": "GD-001", "name": "Sita Kumar", "contact": "9123456780", "relation": "Spouse" }
+    ]);
     setLoading(false);
   };
 
@@ -25,12 +22,7 @@ export default function Guardians() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this guardian?")) return;
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/guardians/${id}`, { method: 'DELETE' });
-      fetchGuardians();
-    } catch (e) {
-      console.error(e);
-    }
+    setGuardians(guardians.filter(g => g.id !== id));
   };
 
   const handleAddSubmit = async (e) => {
@@ -43,15 +35,8 @@ export default function Guardians() {
       relation: formData.get('relation'),
       patientId: "PT101" // Mock default
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/guardians`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setIsAddModalOpen(false);
-      fetchGuardians();
-    } catch (e) { console.error(e); }
+    setGuardians([...guardians, data]);
+    setIsAddModalOpen(false);
   };
 
   const handleEditSubmit = async (e) => {
@@ -63,15 +48,8 @@ export default function Guardians() {
       contact: formData.get('contact'),
       relation: formData.get('relation')
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/guardians/${editingGuardian.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setEditingGuardian(null);
-      fetchGuardians();
-    } catch (e) { console.error(e); }
+    setGuardians(guardians.map(g => g.id === data.id ? data : g));
+    setEditingGuardian(null);
   };
 
   return (

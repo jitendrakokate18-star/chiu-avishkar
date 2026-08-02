@@ -10,12 +10,12 @@ export default function Caregivers() {
 
   const fetchCaregivers = async () => {
     setLoading(true);
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/caregivers`);
-      if (res.ok) setCaregivers(await res.json());
-    } catch (e) {
-      console.error(e);
-    }
+    setCaregivers([
+      { "id": "CG-001", "name": "Sunita Verma", "specialization": "Dementia Care", "status": "Active" },
+      { "id": "CG-002", "name": "Rahul Desai", "specialization": "Post-Op Recovery", "status": "Active" },
+      { "id": "CG-003", "name": "Anjali Patel", "specialization": "Mobility Assistance", "status": "Active" },
+      { "id": "CG-004", "name": "Priya Singh", "specialization": "General Care", "status": "Active" }
+    ]);
     setLoading(false);
   };
 
@@ -25,12 +25,7 @@ export default function Caregivers() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this caregiver?")) return;
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/caregivers/${id}`, { method: 'DELETE' });
-      fetchCaregivers();
-    } catch (e) {
-      console.error(e);
-    }
+    setCaregivers(caregivers.filter(c => c.id !== id));
   };
 
   const handleAddSubmit = async (e) => {
@@ -44,15 +39,8 @@ export default function Caregivers() {
       experience: "1+ years",
       rating: 5.0
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/caregivers`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setIsAddModalOpen(false);
-      fetchCaregivers();
-    } catch (e) { console.error(e); }
+    setCaregivers([...caregivers, data]);
+    setIsAddModalOpen(false);
   };
 
   const handleEditSubmit = async (e) => {
@@ -63,15 +51,8 @@ export default function Caregivers() {
       name: formData.get('name'),
       specialization: formData.get('spec')
     };
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/caregivers/${editingCaregiver.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      setEditingCaregiver(null);
-      fetchCaregivers();
-    } catch (e) { console.error(e); }
+    setCaregivers(caregivers.map(c => c.id === data.id ? data : c));
+    setEditingCaregiver(null);
   };
 
   return (
